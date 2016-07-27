@@ -1,0 +1,81 @@
+<nav role="navigation">
+    <ul class="right mainnav">
+{% macro loop(page) %}
+    {% for p in page.children.visible %}
+        {% set current_page = (p.active or p.activeChild) ? 'selected' : '' %}
+        {% if p.children.visible.count > 0 %}
+            <li class="has-children {{ current_page }}">
+                <a href="{{ p.url }}">
+                    {% if p.header.icon %}<i class="fa fa-{{ p.header.icon }}"></i>{% endif %}
+                    {{ p.menu }}
+                </a>
+                <ul>
+                    {{ _self.loop(p) }}
+                </ul>
+            </li>
+        {% else %}
+            <li class="{{ current_page }}">
+                <a href="{{ p.url }}">
+                    {% if p.header.icon %}<i class="fa fa-{{ p.header.icon }}"></i>{% endif %}
+                    {{ p.menu }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+        </ul>
+    </nav>
+<!--
+<ul>
+    {% if theme_config.dropdown.enabled %}
+        {{ _self.loop(pages) }}
+    {% else %}
+        {% for page in pages.children.visible %}
+            {% set current_page = (page.active or page.activeChild) ? 'selected' : '' %}
+            <li class="{{ current_page }}">
+                <a href="{{ page.url }}">
+                    {% if page.header.icon %}<i class="fa fa-{{ page.header.icon }}"></i>{% endif %}
+                    {{ page.menu }}
+                </a>
+            </li>
+        {% endfor %}
+    {% endif %}
+    {% for mitem in site.menu %}
+        <li>
+            <a href="{{ mitem.url }}">
+                {% if mitem.icon %}<i class="fa fa-{{ mitem.icon }}"></i>{% endif %}
+                {{ mitem.text }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+<!--
+<nav role="navigation">
+    <ul class="right mainnav">
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+        <li>
+            <a href="cap.html">
+                Capabilities
+            </a>
+        </li>
+        <li>
+            <a href="">
+                Clients
+            </a>
+        </li>
+        <li>
+            <a href="">
+                Team
+            </a>
+        </li>
+        <li>
+            <a href="">
+                Contact
+            </a>
+        </li>
+    </ul>
+</nav>-->

@@ -1,0 +1,64 @@
+{% set theme_config = attribute(config.themes, config.system.pages.theme) %}
+<!DOCTYPE html>
+<html lang="{{ grav.language.getActive ?: theme_config.default_lang }}">
+<head>
+{% block head %}
+    <meta charset="utf-8" />
+    <title>
+        {% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}
+    </title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'partials/metadata.html.twig' %}
+
+    <link rel="icon" type="image/png" href="{{ url('theme://images/logo.png') }}" />
+    <link rel="canonical" href="{{ page.url(true, true) }}" />
+
+    {% block stylesheets %}
+        {% do assets.addCss('theme://css/custom.css', 100) %}
+    {% endblock %}
+    {{ assets.css() }}
+
+    {% block javascripts %}
+        {% do assets.addJs('jquery', 100) %}
+    {% endblock %}
+    {{ assets.js() }}
+
+{% endblock head%}
+</head>
+<body id="top" class="{{ page.header.body_classes }}">
+
+{% block header %}
+    <header role="banner">
+        <h1>
+            <a href="">
+                <img src="{{ url('theme://images/panologo.png') }}" title="{{ config.site.title }}" alt="{{ config.site.title }}">
+            </a>
+        </h1>
+        <h2>
+            The Creative's Ally.
+        </h2>
+    </header>
+{% endblock header %}
+
+{% block header_navigation %}
+    {% include 'partials/navigation.html.twig' %}
+{% endblock header_navigation %}
+
+{% block body %}
+    {% block content %}{% endblock %}
+{% endblock body %}
+
+{% block share %}
+    {% include 'partials/share.html.twig' %}
+{% endblock share %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block bottom %}
+    {{ assets.js('bottom') }}
+{% endblock bottom %}
+
+</body>
